@@ -3,7 +3,7 @@ import { Dimensions, Pressable, StyleSheet, TextInput, View } from "react-native
 import { Icon } from "react-native-elements";
 
 
-const BoldTextInputIconEnd = ({placeholder,icon, value, setValue, type='text', actionIcon})=>{
+const BoldTextInputIconEnd = ({placeholder,icon, value, setValue, type='text', actionIcon, readonly})=>{
 
     const [val,setVal] = useState('');
     const width = Dimensions.get('window').width;
@@ -68,6 +68,7 @@ const BoldTextInputIconEnd = ({placeholder,icon, value, setValue, type='text', a
                     type={type}
                     secureTextEntry={ type =='password'? true: false }
                     placeholderTextColor="#aaaaaa"
+                    editable={(readonly) ? false : true}
                 />
                 <Pressable style={styles.pressIcon} onPress={actionIcon}>
                     <Icon

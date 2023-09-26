@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet, TextInput, View } from "react-native";
 import { Icon } from "react-native-elements";
 
 
-const BoldTextInput = ({placeholder,icon, value, setValue, type='text'})=>{
+const BoldTextInput = ({placeholder,icon, value, setValue, type='text', readonly})=>{
 
     const [val,setVal] = useState('');
     const width = Dimensions.get('window').width;
@@ -46,6 +46,7 @@ const BoldTextInput = ({placeholder,icon, value, setValue, type='text'})=>{
                     style={styles.input}
                     onChangeText={setValue}
                     value={value}
+                    editable={(readonly) ? false : true}
                     placeholder={placeholder}
                     type={type}
                     secureTextEntry={ type =='password'? true: false }

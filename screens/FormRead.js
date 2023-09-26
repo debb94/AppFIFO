@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import BoldTextInput from "../components/atoms/BoldTextInput";
 import BoldTextInputIconEnd from "../components/atoms/BoldTextInputIconEnd";
 import BoldButton from "../components/atoms/BoldButton";
+import DateTimePicker from "react-native-modal-datetime-picker";
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -14,6 +15,37 @@ export default function FormRead({ route, navigation }){
     let params = route.params;
 
     const [data,setData] = useState({});
+
+    // date picker
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (date) => {
+        setFechaLote(date.toString());
+        console.warn("A date has been picked: ", date);
+        hideDatePicker();
+        setTimePickerVisibility(true);
+    };
+
+    const handleConfirmTime = (time)=>{
+        console.log(time);
+        hideTimePicker();
+    }
+
+    const hideTimePicker = ()=>{
+        setTimePickerVisibility(false);
+    }
+    // - date picker
+
+
 
     useEffect(()=>{
         // let params = route.params;
@@ -66,12 +98,35 @@ export default function FormRead({ route, navigation }){
                             icon="barcode-scan"
                             actionIcon={actionScanner1}
                         ></BoldTextInputIconEnd>
-                        <BoldTextInput
+                        <BoldTextInputIconEnd
                             value={fechaLote}
                             setValue={setFechaLote}
                             placeholder="Fecha del lote"
                             type="text"
-                        ></BoldTextInput>
+                            icon="calendar-range"
+                            actionIcon={showDatePicker}
+                        ></BoldTextInputIconEnd>
+                        {/* <BoldTextInput
+                            value={fechaLote}
+                            readonly ={true}
+                            setValue={setFechaLote}
+                            placeholder="Fecha del lote"
+                            type="text"
+                            onPress={showDatePicker}
+                        ></BoldTextInput> */}
+                        {/* <Pressable onPress={showDatePicker}><Text>pulsame</Text></Pressable> */}
+                        <DateTimePicker
+                            isVisible={isDatePickerVisible}
+                            mode="date"
+                            onConfirm={handleConfirm}
+                            onCancel={hideDatePicker}
+                        />
+                        <DateTimePicker
+                            isVisible={isTimePickerVisible}
+                            mode="time"
+                            onConfirm={handleConfirmTime}
+                            onCancel={hideTimePicker}
+                        />
 
                         <Text style={styles.subtitle}>Información del Palet</Text>
                         <BoldTextInputIconEnd
